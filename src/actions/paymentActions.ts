@@ -7,7 +7,7 @@ export function getCardBrandAction(digits: number) {
         // dispatch(beginAjaxCall());
         return PaymentService.getCardBrand(digits)
             .then((brandResponse) => {
-                dispatch({ type: types.GET_CARD_BRAND_ACTION, brandResponse });
+                dispatch({ type: types.GET_CARD_BRAND_SUCCESS, brandResponse });
             })
             .catch((brandResponse) => {
                 // dispatch(ajaxCallError());
