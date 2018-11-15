@@ -107,6 +107,9 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                     (data: any): void => {
                         console.log("Status success", data);
                         this.setState({ status: data });
+                        setTimeout(() => {
+                            this.setState({ status: null });
+                        }, 3000);
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get status", error);
@@ -124,16 +127,10 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
         const payment = this.state.payment;
 
         if (field === "card") {
-
             if (value && isNumber(value) && value.length >= 4) {
                 this.getBrand(value.substr(0, 4));
             }
             payment[field] = creditCardFormatter(value);
-
-        } else if (field === "expiry" || field === "postCode") {
-            if (isNumber(value)) {
-                payment[field] = value;
-            }
         } else {
             payment[field] = value;
         }
@@ -159,11 +156,11 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
             errors.card = "Invalid Card";
             formValidated = false;
         }
-        if (lengthCheck(this.state.payment.expiry, 4)) {
+        if (lengthCheck(this.state.payment.expiry, 4) || !isNumber(this.state.payment.expiry)) {
             errors.expiry = "Invalid Expiry Date";
             formValidated = false;
         }
-        if (lengthCheck(this.state.payment.postCode, 4)) {
+        if (lengthCheck(this.state.payment.postCode, 4) || !isNumber(this.state.payment.postCode)) {
             errors.postCode = "Invalid Postal Code";
             formValidated = false;
         }
