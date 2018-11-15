@@ -1,0 +1,78 @@
+.payment-container {
+    background: $red;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    overflow: auto;
+    >.content {
+        width: 300px;
+        margin: 60px auto 0px auto;
+        >.amount {
+            margin: 20px auto 30px auto;
+            text-align: center;
+            font-size: 40px;
+            .input-amount {
+                color: $white;
+                .input-field {
+                    width: 120px;
+                    display: inline-block;
+                    .form-control {
+                        background: transparent;
+                        color: white;
+                        border: none;
+                        font-size: 40px;
+                        &:focus {
+                            box-shadow: none;
+                        }
+                        &::placeholder {
+                            color: $white;
+                        }
+                    }
+                }
+            }
+        }
+        >.form-holder {
+            background: $white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            .form-group {
+                margin: 0px;
+                height: 50px;
+                border-bottom: 1px solid lightgray;
+                .input-field {
+                    .form-control {
+                        background: transparent;
+                        border: none;
+                        padding: 25px 15px;
+                        font-size: 18px;
+                        &:focus {
+                            box-shadow: none;
+                        }
+                        &.error{
+                            background: #ffdbd1;
+                            border: 1px solid #81270f;
+                        }
+                    }
+                }
+                &.half {
+                    width: 50%;
+                    display: inline-block;
+                    &.first {
+                        border-right: 1px solid lightgray;
+                    }
+                }
+                &:last-child {
+                    border: none;
+                }
+            }
+        }
+        >.btn {
+            width: 100%;
+            background: #81270f;
+            border: none;
+            height: 50px;
+        }
+    }
+}

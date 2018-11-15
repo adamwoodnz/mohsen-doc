@@ -1,3 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import './shared/variables.scss';
 @import './common/shared';
+@import './common/titlebar';
 @import './common/notfound';
+@import './payment/payment';

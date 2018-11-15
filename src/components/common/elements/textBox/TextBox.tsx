@@ -8,6 +8,7 @@ export interface TextBoxProps {
     type?: string;
     label?: string;
     error?: string;
+    currency?: string;
     placeHolder?: string;
     className?: string;
     focus?: boolean;
@@ -23,6 +24,7 @@ export const TextBox: React.StatelessComponent<TextBoxProps> = (props: TextBoxPr
 
     return (
         <div className={wrapperClass}>
+            {props.currency && <span className="currency">{props.currency}</span>}
             <div className="input-field">
                 {props.label && <label htmlFor={props.name}>{props.label}</label>}
                 <input
@@ -39,7 +41,6 @@ export const TextBox: React.StatelessComponent<TextBoxProps> = (props: TextBoxPr
                     maxLength={props.max}
                 />
             </div>
-            {props.error && <div className="alert alert-danger">{props.error}</div>}
         </div>
     );
 };

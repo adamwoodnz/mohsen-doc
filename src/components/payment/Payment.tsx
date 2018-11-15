@@ -7,6 +7,7 @@ import * as paymentActions from "../../actions/paymentActions";
 import { AppSharedProps } from "../../models/reduxModel";
 import { Button } from "../common/elements/button";
 import { TextBox } from "../common/elements/textBox";
+import TitleBar from "../common/TitleBar";
 import { PaymentModel } from "../../models/paymentModel";
 import { luhnChk, isNumber, empty, lengthCheck } from "../../utils/cardUtil";
 import { creditCardFormatter } from "../../utils/formatter";
@@ -168,12 +169,13 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
         return (
             <div className="payment-container">
                 <div className="content">
-                    <div className="title">Pushpay</div>
+                    <TitleBar />
                     <div className="amount">
-                        <span className="type">$</span>
                         <TextBox
                             name="amount"
                             placeHolder="0.00"
+                            currency="$"
+                            className="input-amount"
                             error={this.state.errors.amount}
                             value={this.state.payment.amount}
                             onChange={this.inputChangeEvent}
@@ -189,6 +191,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         <TextBox
                             name="expiry"
                             placeHolder="Expiry Year"
+                            className="half first"
                             error={this.state.errors.expiry}
                             value={this.state.payment.expiry}
                             max={4}
@@ -197,6 +200,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         <TextBox
                             name="postCode"
                             placeHolder="Post Code"
+                            className="half"
                             error={this.state.errors.postCode}
                             value={this.state.payment.postCode}
                             max={4}
@@ -210,7 +214,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         />
                     </div>
                     <Button
-                        label={"Pay $" + this.state.payment.amount + (this.state.cardType ? (" with " + this.state.cardType) : "")}
+                        label={"Pay" + (this.state.payment.amount ? (" $") + this.state.payment.amount : "") + (this.state.cardType ? (" with " + this.state.cardType) : "")}
                         onClick={this.savePayment}
                     />
                 </div>

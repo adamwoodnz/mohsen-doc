@@ -1,0 +1,11 @@
+.title-holder {
+    text-align: center;
+    color: $white;
+    font-size: $large;
+    margin: 30px 0px;
+    >.header-logo {
+        >.logo-icon {
+            width: 60px;
+        }
+    }
+}
