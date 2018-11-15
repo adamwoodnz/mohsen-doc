@@ -16,13 +16,13 @@ export function getJson(type: jsonTypes): Promise<any> {
     let data: any;
     switch (type) {
         case jsonTypes.GET_CARD_BRAND:
-            if (process.env.NODE_ENV !== "production") { data = require("./jsons/sample.json"); }
+            if (process.env.NODE_ENV !== "production") { data = require("./jsons/cardBrand.json"); }
             return new Promise((resolve, reject) => { simulateData(resolve, data, 200, configs.delay); });
         case jsonTypes.POST_AMOUNT:
-            if (process.env.NODE_ENV !== "production") { data = require("./jsons/sample.json"); }
+            if (process.env.NODE_ENV !== "production") { data = require("./jsons/paymentPost.json"); }
             return new Promise((resolve, reject) => { simulateData(resolve, data, 200, configs.delay); });
         case jsonTypes.GET_PAYMENT_STATUS:
-            if (process.env.NODE_ENV !== "production") { data = require("./jsons/sample.json"); }
+            if (process.env.NODE_ENV !== "production") { data = require("./jsons/paymentStatus.json"); }
             return new Promise((resolve, reject) => { simulateData(resolve, data, 200, configs.delay); });
         default: return new Promise((resolve, reject) => reject("JSON data should not be retireved in production mode"));
     }
