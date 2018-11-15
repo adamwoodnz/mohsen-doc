@@ -6,8 +6,8 @@
     "linterOptions": {
         "exclude": [
             "src/apis/generated/*.ts",
-            "tests/coverage/**",
-            "tests/__mocks__/**",
+            "src/tests/coverage/**",
+            "src/tests/__mocks__/**",
             "*.js"
         ]
     },
