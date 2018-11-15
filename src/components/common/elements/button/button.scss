@@ -1,0 +1,35 @@
+$default: 14px;
+$blue-dark:#0092E1;
+$blue-darker:#007AC7;
+$blue-darkest: #05578c;
+$white: #fff;
+$transparent: transparent;
+button.btn.custom-button {
+    min-width: 120px;
+    &.btn-anchor {
+        background: $transparent;
+        border: 0;
+        color: $blue-darkest;
+        &:hover {
+            background: $transparent;
+            color: $blue-dark;
+            text-decoration: underline;
+        }
+        &:active {
+            color: $blue-darkest;
+        }
+        &:active,
+        &:focus {
+            background: $transparent;
+            text-decoration: underline;
+        }
+    }
+    .custom-icon-left {
+        float: left;
+        padding-top: 4px;
+    }
+    .custom-icon-right {
+        float: right;
+        padding-top: 4px
+    }
+}

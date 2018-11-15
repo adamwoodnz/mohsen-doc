@@ -1,0 +1,25 @@
+@import '../shared/variables';
+
+.notfound-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    .content {
+        position: relative;
+        top: 25%;
+        .header {
+            font-size: 160px;
+            color: $blue-darker;
+            line-height: 1;
+            font-weight: bold;
+        }
+        .desc {
+            font-size: 40px;
+            margin: 20px 0 60px;
+            color: $blue-darker;
+        }
+    }
+}

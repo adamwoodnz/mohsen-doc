@@ -1,0 +1,30 @@
+//sizes
+$standard: 16px;
+$default: 14px;
+//colors
+$white: #fff;
+$red: #F03529;
+$blue: #41B0EE;
+$blue-dark: #0092E1;
+$transparent: transparent;
+$gray-600: #868686;
+.form-group.input-box {
+    .input-field {
+        .form-control {
+            &.error {
+                border: 1px solid $red;
+            }
+        }
+    }
+    .alert {
+        padding: 0px 2px;
+        margin: 0;
+        &.alert-danger {
+            color: $red;
+            background: none;
+            border: none;
+            border-radius: 0px;
+            width: 100%;
+        }
+    }
+}

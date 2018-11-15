@@ -1,0 +1,44 @@
+$transparent-black: rgba(0, 0, 0, 0.4);
+$white: #fff;
+$blue: #41B0EE;
+$green: #60cd18;
+.loaderWrapper {
+    .loader-holder {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 101;
+        .loader {
+            border: 10px solid $white;
+            border-top: 10px solid $green;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: adjust-hue 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes adjust-hue {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    }
+    &.fullscreen {
+        .loader-holder {
+            position: fixed;
+            background-color: $transparent-black;
+            .loader {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                margin: unset;
+            }
+        }
+    }
+}

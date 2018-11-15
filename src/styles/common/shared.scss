@@ -1,0 +1,33 @@
+.app-container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    overflow: hidden;
+    .route-holders {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        overflow: auto;
+        transition: 0.5s;
+    }
+}
+
+.shared-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: inherit;
+}

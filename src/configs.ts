@@ -5,16 +5,18 @@ const TYPE_REST = "REST";
 // LANGUAGES
 const LANG_EN = "en";
 
+// resources
+const BASE_URL = "http://tulip-rabbit.glitch.me";
+
 // API contexts
 // We will pass this to swagger class constractor if we need different base urls
 const DEFAULT = "";
-const SECONDARY = "/something";
 
 // CONFIG DATA (Please change here only)
 const configs = {
     delay: 500,
     toastDelay: 5000,
-    socket: SOCKET_URL,
+    baseURL: BASE_URL,
     type: TYPE_LOCAL,
     context: DEFAULT,
     lang: LANG_EN,
