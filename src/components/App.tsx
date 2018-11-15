@@ -27,7 +27,7 @@ class App extends React.Component<AppProps, any>  {
 
                 <div className="route-holders">
                     <Switch>
-                        <Routing path="/" exact={true} component={Payment} props={null} />
+                        <Routing path={routePaths.AppRoutes.Home} exact={true} component={Payment} props={null} />
                         <Routing path="*" component={NotFound} props={null} />
                     </Switch>
                 </div>
