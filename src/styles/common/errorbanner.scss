@@ -1,0 +1,19 @@
+.error-banner {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        background: rgba(0, 0, 0, 0.7);
+        color: $white;
+        li {
+            .values {
+                padding: 10px;
+                border-bottom: 1px solid lightgray;
+            }
+        }
+    }
+}

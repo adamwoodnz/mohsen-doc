@@ -11,6 +11,7 @@ import TitleBar from "../common/TitleBar";
 import { PaymentModel } from "../../models/paymentModel";
 import { luhnChk, isNumber, empty, lengthCheck } from "../../utils/cardUtil";
 import { creditCardFormatter } from "../../utils/formatter";
+import ErrorBanner from "../common/ErrorBanner";
 
 interface PaymentProps extends AppSharedProps {
     actions: any;
@@ -22,6 +23,7 @@ interface PaymentProps extends AppSharedProps {
 interface PaymentState {
     payment: PaymentModel;
     errors: PaymentModel;
+    errorExist: boolean;
     cardType: string;
 }
 
@@ -43,6 +45,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 expiry: "",
                 postCode: ""
             },
+            errorExist: false,
             cardType: ""
         };
 
@@ -159,8 +162,11 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
 
     savePayment() {
         if (this.validateForm()) {
+            this.setState({ errorExist: false });
             console.log("Save clicked", this.state.payment);
             this.createPayment(this.state.payment.amount);
+        } else {
+            this.setState({ errorExist: true });
         }
     }
 
@@ -168,6 +174,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
     render() {
         return (
             <div className="payment-container">
+                {this.state.errorExist && <ErrorBanner errors={this.state.errors} />}
                 <div className="content">
                     <TitleBar />
                     <div className="amount">
