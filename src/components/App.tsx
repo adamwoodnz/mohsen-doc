@@ -8,6 +8,7 @@ import { Loader } from "./common/elements/loader";
 
 // Here we are asynchronously loading components based on their path
 const NotFound = Loadable({ loader: () => import("./common/NotFound"), loading: () => null });
+const Payment = Loadable({ loader: () => import("./payment/Payment"), loading: () => null });
 
 interface AppProps {
     progress: number;
@@ -19,21 +20,6 @@ class App extends React.Component<AppProps, any>  {
 
     }
 
-    toggleSidebar(event): void {
-        event.stopPropagation();
-        if (this.state.sidebarToggle) {
-            this.setState({ sidebarToggle: false });
-        } else {
-            this.setState({ sidebarToggle: true });
-        }
-    }
-
-    closeSideMenu() {
-        if (this.state.sidebarToggle) {
-            this.setState({ sidebarToggle: false });
-        }
-    }
-
     render() {
         return (
             <div className="app-container">
@@ -41,7 +27,7 @@ class App extends React.Component<AppProps, any>  {
 
                 <div className="route-holders">
                     <Switch>
-                        <Routing path="/" exact={true} component={NotFound} props={null} />
+                        <Routing path="/" exact={true} component={Payment} props={null} />
                         <Routing path="*" component={NotFound} props={null} />
                     </Switch>
                 </div>
