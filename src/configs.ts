@@ -15,7 +15,6 @@ const DEFAULT = "";
 // CONFIG DATA (Please change here only)
 const configs = {
     delay: 500,
-    toastDelay: 5000,
     baseURL: BASE_URL,
     type: TYPE_LOCAL,
     context: DEFAULT,

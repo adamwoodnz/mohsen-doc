@@ -3,7 +3,7 @@ import { getJson, jsonTypes } from "./offline/mockSimulator";
 import { PaymentApis } from "./online/apis";
 
 const getCardBrandCall = (digits: number) => {
-    console.log("getCardBrand with 4 digits: ", digits);
+    console.log("API getCardBrand with 4 digits: ", digits);
     if (configs.type === "LOCAL") {
         return getJson(jsonTypes.GET_CARD_BRAND);
     } else {
@@ -13,7 +13,7 @@ const getCardBrandCall = (digits: number) => {
 };
 
 const createPaymentCall = (amount: string) => {
-    console.log("createPayment with amount: ", amount);
+    console.log("API createPayment with amount: ", amount);
     if (configs.type === "LOCAL") {
         return getJson(jsonTypes.POST_AMOUNT);
     } else {
@@ -23,7 +23,7 @@ const createPaymentCall = (amount: string) => {
 };
 
 const paymentStatusCall = (id: string) => {
-    console.log("paymentStatus with id: ", id);
+    console.log("API paymentStatus with id: ", id);
     if (configs.type === "LOCAL") {
         return getJson(jsonTypes.GET_PAYMENT_STATUS);
     } else {

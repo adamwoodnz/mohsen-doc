@@ -69,7 +69,8 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 responseInterceptor(
                     this.props.paymentResult,
                     (data: any): void => {
-                        console.log("payment success", data);
+                        console.log("payment success with ID: ", data);
+                        this.getStatus(data);
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get payment", error);
@@ -83,9 +84,10 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
         this.props.actions.paymentStatusAction(id)
             .then(() => {
                 responseInterceptor(
-                    this.props.brandResult,
+                    this.props.statusResult,
                     (data: any): void => {
                         console.log("Status success", data);
+                        alert("Your payment Status: " + data);
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get status", error);
@@ -112,6 +114,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
 
     savePayment() {
         console.log("Btn clicked", this.state.payment);
+        this.createPayment(this.state.payment.amount);
     }
 
     // Life Cyle Events-----------------------------------------
