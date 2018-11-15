@@ -23,6 +23,7 @@ interface PaymentState {
         postCode: string;
         note?: string;
     };
+    cardType: string;
 }
 
 export class Payment extends React.Component<PaymentProps, PaymentState>  {
@@ -36,7 +37,8 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 expiry: "",
                 postCode: "",
                 note: ""
-            }
+            },
+            cardType: ""
         };
 
         this.inputChangeEvent = this.inputChangeEvent.bind(this);
@@ -51,6 +53,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                     this.props.brandResult,
                     (data: any): void => {
                         console.log("brand success", data);
+                        this.setState({ cardType: data });
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get brand", error);
@@ -96,6 +99,13 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
     inputChangeEvent(event: any) {
         const field = event.target.name;
         const payment = this.state.payment;
+
+        if (field === "card") {
+            if (event.target.value && event.target.value.length === 4) {
+                console.log("first card values", event.target.value);
+                this.getBrand(event.target.value);
+            }
+        }
         payment[field] = event.target.value;
         this.setState({ payment: payment });
     }
@@ -145,7 +155,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         />
                     </div>
                     <Button
-                        label={"Pay $" + this.state.payment.amount}
+                        label={"Pay $" + this.state.payment.amount + (this.state.cardType ? (" with " + this.state.cardType) : "")}
                         onClick={this.savePayment}
                     />
                 </div>

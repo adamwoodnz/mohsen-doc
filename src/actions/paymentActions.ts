@@ -4,13 +4,13 @@ import { beginAjaxCall, ajaxCallError } from "./ajaxStatusActions";
 
 export function getCardBrandAction(digits: number) {
     return (dispatch) => {
-        dispatch(beginAjaxCall());
+        // dispatch(beginAjaxCall());
         return PaymentService.getCardBrand(digits)
             .then((brandResponse) => {
                 dispatch({ type: types.GET_CARD_BRAND_ACTION, brandResponse });
             })
             .catch((brandResponse) => {
-                dispatch(ajaxCallError());
+                // dispatch(ajaxCallError());
                 dispatch({ type: types.GET_CARD_BRAND_FAILED, brandResponse });
                 console.log("ERROR within Action: ", brandResponse);
             });
