@@ -16,10 +16,13 @@ interface PaymentProps extends AppSharedProps {
 }
 
 interface PaymentState {
-    cardValue: string;
-    expiry: string;
-    postCode: string;
-    note: string;
+    payment: {
+        amount: string;
+        card: string;
+        expiry: string;
+        postCode: string;
+        note?: string;
+    };
 }
 
 export class Payment extends React.Component<PaymentProps, PaymentState>  {
@@ -27,12 +30,17 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
         super(props);
 
         this.state = {
-            cardValue: "",
-            expiry: "",
-            postCode: "",
-            note: ""
+            payment: {
+                amount: "",
+                card: "",
+                expiry: "",
+                postCode: "",
+                note: ""
+            }
         };
 
+        this.inputChangeEvent = this.inputChangeEvent.bind(this);
+        this.savePayment = this.savePayment.bind(this);
     }
 
     // API Calls-----------------------------------------------
@@ -84,42 +92,61 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
             });
     }
 
+    // Events---------------------------------------------------
+    inputChangeEvent(event: any) {
+        const field = event.target.name;
+        const payment = this.state.payment;
+        payment[field] = event.target.value;
+        this.setState({ payment: payment });
+    }
+
+    savePayment() {
+        console.log("Btn clicked", this.state.payment);
+    }
+
     // Life Cyle Events-----------------------------------------
     render() {
         return (
             <div className="payment-container">
                 <div className="content">
                     <div className="title">Pushpay</div>
-                    <div className="amount">$0.00</div>
+                    <div className="amount">
+                        <span className="type">$</span>
+                        <TextBox
+                            name="amount"
+                            placeHolder="0.00"
+                            value={this.state.payment.amount}
+                            onChange={this.inputChangeEvent}
+                        /></div>
                     <div className="form-holder">
                         <TextBox
                             name="card"
                             placeHolder="0000 0000 0000 0000"
-                            value={this.state.cardValue}
-                            onChange={(event) => { this.setState({ cardValue: event.target.value }); }}
+                            value={this.state.payment.card}
+                            onChange={this.inputChangeEvent}
                         />
                         <TextBox
-                            name="year"
+                            name="expiry"
                             placeHolder="Expiry Year"
-                            value={this.state.expiry}
-                            onChange={(event) => { this.setState({ expiry: event.target.value }); }}
+                            value={this.state.payment.expiry}
+                            onChange={this.inputChangeEvent}
                         />
                         <TextBox
-                            name="postcode"
+                            name="postCode"
                             placeHolder="Post Code"
-                            value={this.state.postCode}
-                            onChange={(event) => { this.setState({ postCode: event.target.value }); }}
+                            value={this.state.payment.postCode}
+                            onChange={this.inputChangeEvent}
                         />
                         <TextBox
                             name="note"
                             placeHolder="Optional Note"
-                            value={this.state.note}
-                            onChange={(event) => { this.setState({ note: event.target.value }); }}
+                            value={this.state.payment.note}
+                            onChange={this.inputChangeEvent}
                         />
                     </div>
                     <Button
-                        label="Pay"
-                        onClick={() => { alert("Button Clicked"); }}
+                        label={"Pay $" + this.state.payment.amount}
+                        onClick={this.savePayment}
                     />
                 </div>
             </div >
