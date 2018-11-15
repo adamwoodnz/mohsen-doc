@@ -13,6 +13,7 @@ import { luhnChk, isNumber, empty, lengthCheck } from "../../utils/cardUtil";
 import { creditCardFormatter } from "../../utils/formatter";
 import ErrorBanner from "../common/ErrorBanner";
 import Status from "../common/Status";
+import { Loader } from "../common/elements/loader";
 
 interface PaymentProps extends AppSharedProps {
     actions: any;
@@ -27,6 +28,7 @@ interface PaymentState {
     errorExist: boolean;
     cardType: string;
     status: string;
+    brandToggle: boolean;
 }
 
 export class Payment extends React.Component<PaymentProps, PaymentState>  {
@@ -48,6 +50,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 postCode: ""
             },
             errorExist: false,
+            brandToggle: false,
             cardType: null,
             status: null
         };
@@ -58,13 +61,18 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
 
     // API Calls-----------------------------------------------
     getBrand(digits: number) {
+        this.setState({ brandToggle: true });
         this.props.actions.getCardBrandAction(digits)
             .then(() => {
                 responseInterceptor(
                     this.props.brandResult,
                     (data: any): void => {
                         console.log("brand success", data);
-                        this.setState({ cardType: data });
+                        if (data && typeof data === "string") {
+                            this.setState({ cardType: data, brandToggle: false });
+                        } else {
+                            this.setState({ cardType: "unknown", brandToggle: false });
+                        }
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get brand", error);
@@ -193,6 +201,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                             onChange={this.inputChangeEvent}
                         /></div>
                     <div className="form-holder">
+                        <Loader toggle={this.state.brandToggle} fullscreen={false} className="custom-loader" />
                         <TextBox
                             name="card"
                             error={this.state.errors.card}
