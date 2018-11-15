@@ -4,7 +4,7 @@
  * @license WTFPL (http://www.wtfpl.net/txt/copying)
  */
 export function luhnChk(value) {
-    const luhn = value.replace(/\s/g, "");
+    const luhn = value ? value.replace(/\s/g, "") : "";
     let len = luhn.length,
         mul = 0,
         sum = 0;

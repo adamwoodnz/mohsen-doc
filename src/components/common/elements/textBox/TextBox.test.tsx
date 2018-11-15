@@ -25,13 +25,6 @@ describe("Component: TextBox", () => {
         expect(props.onChange).toBeCalledWith({ target: { value: "test" } });
     });
 
-    it("Should render label and error", () => {
-        const wrapper = shallow(<TextBox {...props} label="label" error="error" />);
-        expect(wrapper.find("label").length).toBe(1);
-        expect(wrapper.find(".alert").length).toBe(1);
-        expect(wrapper.find(".alert-danger").text()).toEqual("error");
-    });
-
     it("Should enable autocomplete when autocomplete is set to true", () => {
         const wrapper = shallow(<TextBox {...props} autoComplete={true} />);
         expect(wrapper.find("input").prop("autoComplete")).toEqual("on");
