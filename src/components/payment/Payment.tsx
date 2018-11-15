@@ -7,6 +7,9 @@ import * as paymentActions from "../../actions/paymentActions";
 import { AppSharedProps } from "../../models/reduxModel";
 import { Button } from "../common/elements/button";
 import { TextBox } from "../common/elements/textBox";
+import { PaymentModel } from "../../models/paymentModel";
+import { luhnChk, isNumber, empty, lengthCheck } from "../../utils/cardUtil";
+import { creditCardFormatter } from "../../utils/formatter";
 
 interface PaymentProps extends AppSharedProps {
     actions: any;
@@ -16,13 +19,8 @@ interface PaymentProps extends AppSharedProps {
 }
 
 interface PaymentState {
-    payment: {
-        amount: string;
-        card: string;
-        expiry: string;
-        postCode: string;
-        note?: string;
-    };
+    payment: PaymentModel;
+    errors: PaymentModel;
     cardType: string;
 }
 
@@ -37,6 +35,12 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 expiry: "",
                 postCode: "",
                 note: ""
+            },
+            errors: {
+                amount: "",
+                card: "",
+                expiry: "",
+                postCode: ""
             },
             cardType: ""
         };
@@ -100,21 +104,63 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
     // Events---------------------------------------------------
     inputChangeEvent(event: any) {
         const field = event.target.name;
+        const value = event.target.value;
         const payment = this.state.payment;
 
         if (field === "card") {
-            if (event.target.value && event.target.value.length === 4) {
-                console.log("first card values", event.target.value);
-                this.getBrand(event.target.value);
+
+            if (value && isNumber(value) && value.length >= 4) {
+                this.getBrand(value.substr(0, 4));
             }
+            payment[field] = creditCardFormatter(value);
+
+        } else if (field === "expiry" || field === "postCode") {
+            if (isNumber(value)) {
+                payment[field] = value;
+            }
+        } else {
+            payment[field] = value;
         }
-        payment[field] = event.target.value;
         this.setState({ payment: payment });
     }
 
+    validateForm() {
+        // reset errors upon click
+        let formValidated = true;
+        let errors = this.state.errors;
+        errors = {
+            amount: "",
+            card: "",
+            expiry: "",
+            postCode: ""
+        };
+
+        if (empty(this.state.payment.amount)) {
+            errors.amount = "Invalid Amount";
+            formValidated = false;
+        }
+        if (!luhnChk(this.state.payment.card)) {
+            errors.card = "Invalid Card";
+            formValidated = false;
+        }
+        if (lengthCheck(this.state.payment.expiry, 4)) {
+            errors.expiry = "Invalid Expiry Date";
+            formValidated = false;
+        }
+        if (lengthCheck(this.state.payment.postCode, 4)) {
+            errors.postCode = "Invalid Postal Code";
+            formValidated = false;
+        }
+
+        this.setState({ errors: errors });
+        return formValidated;
+    }
+
     savePayment() {
-        console.log("Btn clicked", this.state.payment);
-        this.createPayment(this.state.payment.amount);
+        if (this.validateForm()) {
+            console.log("Save clicked", this.state.payment);
+            this.createPayment(this.state.payment.amount);
+        }
     }
 
     // Life Cyle Events-----------------------------------------
@@ -128,12 +174,14 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         <TextBox
                             name="amount"
                             placeHolder="0.00"
+                            error={this.state.errors.amount}
                             value={this.state.payment.amount}
                             onChange={this.inputChangeEvent}
                         /></div>
                     <div className="form-holder">
                         <TextBox
                             name="card"
+                            error={this.state.errors.card}
                             placeHolder="0000 0000 0000 0000"
                             value={this.state.payment.card}
                             onChange={this.inputChangeEvent}
@@ -141,13 +189,17 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                         <TextBox
                             name="expiry"
                             placeHolder="Expiry Year"
+                            error={this.state.errors.expiry}
                             value={this.state.payment.expiry}
+                            max={4}
                             onChange={this.inputChangeEvent}
                         />
                         <TextBox
                             name="postCode"
                             placeHolder="Post Code"
+                            error={this.state.errors.postCode}
                             value={this.state.payment.postCode}
+                            max={4}
                             onChange={this.inputChangeEvent}
                         />
                         <TextBox

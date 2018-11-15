@@ -24,6 +24,8 @@
         "no-var-requires": false,
         "object-literal-shorthand": false,
         "no-console": false,
+        "one-variable-per-declaration": false,
+        "no-bitwise": false,
         "indent": [
             true,
             "spaces",
