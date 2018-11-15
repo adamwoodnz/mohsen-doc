@@ -3,13 +3,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { responseInterceptor } from "../../utils/responseInterceptor";
+import * as paymentActions from "../../actions/paymentActions";
 import { AppSharedProps } from "../../models/reduxModel";
 import { Button } from "../common/elements/button";
 import { TextBox } from "../common/elements/textBox";
 
 interface PaymentProps extends AppSharedProps {
     actions: any;
-    contactResult: any;
+    brandResult: any;
+    paymentResult: any;
+    statusResult: any;
 }
 
 interface PaymentState {
@@ -32,6 +35,56 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
 
     }
 
+    // API Calls-----------------------------------------------
+    getBrand(digits: number) {
+        this.props.actions.getCardBrandAction(digits)
+            .then(() => {
+                responseInterceptor(
+                    this.props.brandResult,
+                    (data: any): void => {
+                        console.log("brand success", data);
+                    },
+                    (error: any): void => {
+                        console.error("Something went wrong, we cant get brand", error);
+                    },
+                    this.props.history
+                );
+            });
+    }
+
+    createPayment(amount: string) {
+        this.props.actions.createPaymentAction(amount)
+            .then(() => {
+                responseInterceptor(
+                    this.props.paymentResult,
+                    (data: any): void => {
+                        console.log("payment success", data);
+                    },
+                    (error: any): void => {
+                        console.error("Something went wrong, we cant get payment", error);
+                    },
+                    this.props.history
+                );
+            });
+    }
+
+    getStatus(id: string) {
+        this.props.actions.paymentStatusAction(id)
+            .then(() => {
+                responseInterceptor(
+                    this.props.brandResult,
+                    (data: any): void => {
+                        console.log("Status success", data);
+                    },
+                    (error: any): void => {
+                        console.error("Something went wrong, we cant get status", error);
+                    },
+                    this.props.history
+                );
+            });
+    }
+
+    // Life Cyle Events-----------------------------------------
     render() {
         return (
             <div className="payment-container">
@@ -76,7 +129,16 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
 
 function mapStateToProps(state: any) {
     return {
+        brandResult: state.brandResponse,
+        paymentResult: state.paymentResponse,
+        statusResult: state.statusResponse
     };
 }
 
-export default withRouter(connect(mapStateToProps)(Payment));
+function mapDispatchToProps(dispatch: any) {
+    return {
+        actions: bindActionCreators(paymentActions, dispatch)
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Payment));

@@ -11,7 +11,8 @@ import statusResponse from "./payment/statusReducer";
 const rootReducer = combineReducers({
     ajaxCallsInProgress,
     brandResponse,
-    paymentResponse
+    paymentResponse,
+    statusResponse
 });
 
 export default rootReducer;
