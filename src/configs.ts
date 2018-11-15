@@ -16,7 +16,7 @@ const DEFAULT = "";
 const configs = {
     delay: 500,
     baseURL: BASE_URL,
-    type: TYPE_LOCAL,
+    type: TYPE_REST,
     context: DEFAULT,
     lang: LANG_EN,
     activateSW: false,

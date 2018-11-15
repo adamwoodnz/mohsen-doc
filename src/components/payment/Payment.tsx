@@ -12,6 +12,7 @@ import { PaymentModel } from "../../models/paymentModel";
 import { luhnChk, isNumber, empty, lengthCheck } from "../../utils/cardUtil";
 import { creditCardFormatter } from "../../utils/formatter";
 import ErrorBanner from "../common/ErrorBanner";
+import Status from "../common/Status";
 
 interface PaymentProps extends AppSharedProps {
     actions: any;
@@ -25,6 +26,7 @@ interface PaymentState {
     errors: PaymentModel;
     errorExist: boolean;
     cardType: string;
+    status: string;
 }
 
 export class Payment extends React.Component<PaymentProps, PaymentState>  {
@@ -46,7 +48,8 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                 postCode: ""
             },
             errorExist: false,
-            cardType: ""
+            cardType: null,
+            status: null
         };
 
         this.inputChangeEvent = this.inputChangeEvent.bind(this);
@@ -95,10 +98,11 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
                     this.props.statusResult,
                     (data: any): void => {
                         console.log("Status success", data);
-                        alert("Your payment Status: " + data);
+                        this.setState({ status: data });
                     },
                     (error: any): void => {
                         console.error("Something went wrong, we cant get status", error);
+                        this.setState({ status: "An error happened" });
                     },
                     this.props.history
                 );
@@ -175,6 +179,7 @@ export class Payment extends React.Component<PaymentProps, PaymentState>  {
         return (
             <div className="payment-container">
                 {this.state.errorExist && <ErrorBanner errors={this.state.errors} />}
+                {this.state.status && <Status status={this.state.status} />}
                 <div className="content">
                     <TitleBar />
                     <div className="amount">

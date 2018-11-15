@@ -1,0 +1,17 @@
+.status-holder {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    background: rgba(0, 0, 0, 0.72);
+    .status {
+        position: absolute;
+        color: $white;
+        font-size: 40px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: 0.5s;
+    }
+}
